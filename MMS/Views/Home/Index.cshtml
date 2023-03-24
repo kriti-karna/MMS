@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="page-container sm">
+    <h3>Please login to continue</h3>
+    <hr>
+    <form asp-action="Login"> 
+        <label>Username</label>
+        <input type="text" name="Username" class="form-control" required />
+        <label>Password</label>
+        <input type="password" name="Password" class="form-control" required />
+        @if (TempData["Error"] != null)
+        {
+            <p style="font-size: 12px; color: darkred">@TempData["Error"]</p>
+        }
+        <button type="submit" class="control-btn">Login</button>
+    </form>
+</div>

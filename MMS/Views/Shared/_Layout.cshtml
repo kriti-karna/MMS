@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MMS.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <style>
+        .page-container {
+            height: fit-content;
+            max-height: 500px;
+            margin: auto;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 25px;
+        }
+
+            .page-container.sm {
+                width: 550px;
+            }
+
+            .page-container.lg {
+                width: 1000px;
+                overflow: scroll;
+            }
+
+        .control-btn {
+            margin: auto;
+            margin-top: 15px;
+            text-decoration: none;
+            width: 150px;
+            border: 1px solid black;
+            padding: 5px 25px;
+            border-radius: 5px;
+        }
+
+        .control-btn.lg {
+            width: 200px;
+        }
+
+            .control-btn.sm {
+                width: 100px;
+            }
+
+        table {
+            margin-top: 15px !important;
+            border: 1px solid black !important;
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+
+        thead {
+            background-color: #e2e2e2 !important;
+        }
+
+        th, td {
+            border: 1px solid black !important;
+            text-align: left !important;
+            padding: 8px !important;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2 !important;
+        }
+    </style>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">MMS - Movie Management System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @if(Context.Session.GetString("Name") != null)
+                {
+                    <a style="float: right;" asp-controller="Home" asp-action="Logout">Logout</a>
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - MMS
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

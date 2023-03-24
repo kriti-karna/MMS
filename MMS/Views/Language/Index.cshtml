@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Language>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="page-container lg">
+    <div style="display: flex; justify-content: space-between;">
+        <h6>Languages</h6>
+        <a asp-controller="Home" asp-action="Dashboard">Home</a>
+    </div>
+    <hr>
+    <button class="control-btn lg" onclick="addNew();">Add Language</button><br />
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 15%;">S.N.</th>
+                <th style="width: 50%;">Language</th>
+                <th style="width: 35%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int sn = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(sn++)</td>
+                    <td>@(item.Title)</td>
+                    <td>
+                        <button type="button" class="control-btn" onclick="editLanguage(@item.Id, '@item.Title')">Edit</button>
+                        <button type="button" class="control-btn" onclick="deleteLanguage(@item.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="addLanguage" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="margin:auto; text-align: center;" id="modal-title"></h5>
+                <button type="button" class="btn-close" onclick="closeModal();">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="AddLanguage">
+                    <input type="hidden" name="Id" id="langId" />
+                    <input type="hidden" name="type" id="langType" />
+                    <label for="Title">Write the name of the language</label>
+                    <input type="text" id="langTitle" name="Title" class="form-control" placeholder="Language" />
+                    <div style="display: flex; justify-content: space-between;">
+                        <button type="submit" class="control-btn">Save</button>
+                        <button type="reset" class="control-btn" onclick="closeModal();">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function addNew() {
+        document.getElementById("modal-title").innerHTML = 'Add New Language';
+        document.getElementById("langType").value = "add";
+        $("#addLanguage").modal('show');
+    }
+
+    function editLanguage(id, lang) {
+        document.getElementById("modal-title").innerHTML = 'Edit Language';
+        document.getElementById("langId").value = id;
+        document.getElementById("langType").value = "edit";
+        document.getElementById("langTitle").value = lang;
+        $("#addLanguage").modal('show');
+    }
+
+    function deleteLanguage(id) {
+        if (confirm("Are you sure to delete this?")) {
+            $.ajax({
+                type: 'POST',
+                url: 'Language/DeleteLanguage',
+                data: 'id=' + id,
+                success: function (data) {
+                    if (data == 'success') {
+                        location.reload();
+                    }
+                    else if (data == 'movie') {
+                        alert('There is movie in this language so you cannot delete the language');
+                    }
+                    else if (data == 'error') {
+                        alert('Something went wrong in the server!');
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong, please try again later!');
+                }
+            });
+        }
+    }
+
+    function closeModal() {
+        $("#addLanguage").modal('hide');
+    }
+</script>

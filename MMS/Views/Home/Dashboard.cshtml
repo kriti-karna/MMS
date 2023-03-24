@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .select-btn {
+        padding: 20px 35px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 200px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .select-btn:hover {
+        color: black;
+    }
+</style>
+
+<div class="page-container sm">
+    <h5>Welcome @(Context.Session.GetString("Name")) to Movie Management System!</h5>
+    <hr>
+    <div style="display: flex; justify-content: space-evenly;">
+        <a class="select-btn" asp-controller="Language" asp-action="Index">
+            Language
+        </a>
+        <a class="select-btn" asp-controller="Movie" asp-action="Index">
+            Movies
+        </a>
+    </div>
+    @if (TempData["Error"] != null)
+    {
+        <p style="font-size: 12px; color: darkred; text-align: center; margin-top: 10px;">
+            @TempData["Error"]
+        </p>
+    }
+</div>
